@@ -8,6 +8,8 @@ import commentRoutes from './routes/comment.route.js';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 
+const PORT=process.env.PORT || 3000
+
 dotenv.config();
 
 mongoose
@@ -26,8 +28,8 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-app.listen(3000, () => {
-  console.log('Server is running on port 3000!');
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}!`);
 });
 
 app.use('/api/user', userRoutes);
