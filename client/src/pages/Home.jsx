@@ -19,7 +19,7 @@ export default function Home() {
       <div className='flex flex-col gap-6 p-28 px-3 max-w-6xl mx-auto '>
         <h1 className='text-3xl font-bold lg:text-6xl'>Добро пожаловать!</h1>
         <p className='text-gray-500 text-xs sm:text-sm'>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, aliquid.
+          У нас ты найдёшь всё о японском языке и Японии ʕ●ᴥ●ʔノ
         </p>
         <Link
           to='/search'
