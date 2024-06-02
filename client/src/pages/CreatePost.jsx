@@ -98,8 +98,8 @@ export default function CreatePost() {
     }
     if (res.ok) {
       setCategories(data.categories);
+      setFormData({...formData, category:data.categories[0].name})
       setCategoryLoading(false);
-      console.log(data.categories);
     }
   };
   useEffect(() => {

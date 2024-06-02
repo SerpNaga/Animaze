@@ -11,9 +11,12 @@ import PostCard from "../components/PostCard";
 export default function PostPage() {
   const { postSlug } = useParams();
   const [loading, setLoading] = useState(true);
+  const [similarLoading, setSimilarLoading] = useState(true);
+  const [similarPosts, setSimilarPosts] = useState(null);
+  const [recentLoading, setRecentLoading] = useState(true);
+  const [recentPosts, setRecentPosts] = useState(null);
   const [error, setError] = useState(false);
   const [post, setPost] = useState(null);
-  const [recentPosts, setRecentPosts] = useState(null);
   const { currentUser } = useSelector((state) => state.user);
 
   const handleLike = async (postId) => {
@@ -39,6 +42,36 @@ export default function PostPage() {
   };
 
   useEffect(() => {
+    const fetchSimilarPosts = async (post) => {
+      setSimilarLoading(true);
+      const res = await fetch(
+        `/api/post/getposts?sort=desc-likes&category=${post.category}&limit=3`
+      );
+      const data = await res.json();
+      if (!res.ok) {
+        setError(true);
+        setSimilarLoading(false);
+      }
+      if (res.ok) {
+        setSimilarPosts(data.posts.filter((el) => el._id != post._id));
+        setSimilarLoading(false);
+      }
+    };
+    const fetchRecentPosts = async (post) => {
+      setRecentLoading(true);
+      const res = await fetch(
+        `/api/post/getposts?limit=3`
+      );
+      const data = await res.json();
+      if (!res.ok) {
+        setError(true);
+        setRecentLoading(false);
+      }
+      if (res.ok) {
+        setRecentPosts(data.posts.filter((el) => el._id != post._id));
+        setRecentLoading(false);
+      }
+    };
     const fetchPost = async () => {
       try {
         setLoading(true);
@@ -53,6 +86,8 @@ export default function PostPage() {
           setPost(data.posts[0]);
           setLoading(false);
           setError(false);
+          fetchSimilarPosts(data.posts[0]);
+          fetchRecentPosts(data.posts[0]);
         }
       } catch (error) {
         setError(true);
@@ -61,21 +96,6 @@ export default function PostPage() {
     };
     fetchPost();
   }, [postSlug]);
-
-  useEffect(() => {
-    try {
-      const fetchRecentPosts = async () => {
-        const res = await fetch(`/api/post/getposts?limit=3`);
-        const data = await res.json();
-        if (res.ok) {
-          setRecentPosts(data.posts);
-        }
-      };
-      fetchRecentPosts();
-    } catch (error) {
-      console.log(error.message);
-    }
-  }, []);
 
   if (loading)
     return (
@@ -134,19 +154,37 @@ export default function PostPage() {
         </button>
         <p className="text-gray-400">
           {post.numberOfLikes > 0 &&
-            post.numberOfLikes +
-              " " +
-              ruEnds(post.numberOfLikes)}
+            post.numberOfLikes + " " + ruEnds(post.numberOfLikes)}
         </p>
       </div>
       <CommentSection postId={post._id} />
 
       <div className="flex flex-col justify-center items-center mb-5">
-        <h1 className="text-xl mt-5">Недавние статьи</h1>
-        <div className="flex flex-wrap gap-5 mt-5 justify-center">
-          {recentPosts &&
-            recentPosts.map((post) => <PostCard key={post._id} post={post} />)}
-        </div>
+        {!similarLoading && similarPosts.length > 0 && (
+          <>
+            <h1 className="text-xl mt-5">Похожие статьи</h1>
+            <div className="flex flex-wrap gap-5 mt-5 justify-center">
+              {similarPosts.map((post) => (
+                <PostCard key={post._id} post={post} />
+                ))}
+            </div>
+          </>
+        )}
+        {similarLoading || recentLoading && (
+          <div className="flex justify-center items-center min-h-screen">
+            <Spinner size="xl" />
+          </div>
+        )}
+        {!recentLoading && recentPosts.length > 0 && (
+          <>
+            <h1 className="text-xl mt-5">Похожие статьи</h1>
+            <div className="flex flex-wrap gap-5 mt-5 justify-center">
+              {recentPosts.map((post) => (
+                <PostCard key={post._id} post={post} />
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </main>
   );

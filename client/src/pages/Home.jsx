@@ -91,7 +91,7 @@ export default function Home() {
       </div>
 
       <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 py-7">
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col items-center gap-6">
           <h2 className="text-2xl font-semibold text-center">Новые статьи</h2>
           {recentLoading && (
             <div className="flex justify-center items-center min-h-screen">
@@ -100,7 +100,7 @@ export default function Home() {
           )}
           {!recentLoading && (
             <>
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-4 sm:w-[360px] md:w-[736px] xl:w-[1112px]">
                 {!recentLoading && recentPosts.length === 0 && (
                   <p className="text-xl text-gray-500">Ничего не найдено.</p>
                 )}
@@ -128,7 +128,7 @@ export default function Home() {
           )}
           {!popularLoading && (
             <>
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-4 sm:w-[360px] md:w-[736px] xl:w-[1112px]">
                 {!popularLoading && popularPosts.length === 0 && (
                   <p className="text-xl text-gray-500">Ничего не найдено.</p>
                 )}
