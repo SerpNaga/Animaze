@@ -187,6 +187,7 @@ export default function DashboardComp() {
               <Table.HeadCell>Фото статьи</Table.HeadCell>
               <Table.HeadCell>Название статьи</Table.HeadCell>
               <Table.HeadCell>Категория</Table.HeadCell>
+              <Table.HeadCell>Лайки</Table.HeadCell>
             </Table.Head>
             {posts &&
               posts.map((post) => (
@@ -201,6 +202,7 @@ export default function DashboardComp() {
                     </Table.Cell>
                     <Table.Cell className='w-96'>{post.title}</Table.Cell>
                     <Table.Cell className='w-5'>{post.category}</Table.Cell>
+                    <Table.Cell>{post.numberOfLikes}</Table.Cell>
                   </Table.Row>
                 </Table.Body>
               ))}

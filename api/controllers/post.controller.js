@@ -1,6 +1,7 @@
 import Post from '../models/post.model.js';
 import { errorHandler } from '../utils/error.js';
 import { transliterate as slugify } from 'transliteration';
+import { sortCheck } from '../utils/sortCheck.js';
 
 export const create = async (req, res, next) => {
   if (!req.user.isAdmin) {
@@ -27,7 +28,6 @@ export const getposts = async (req, res, next) => {
   try {
     const startIndex = parseInt(req.query.startIndex) || 0;
     const limit = parseInt(req.query.limit) || 9;
-    const sortDirection = req.query.sort === 'asc' ? 1 : -1;
     const posts = await Post.find({
       ...(req.query.userId && { userId: req.query.userId }),
       ...(req.query.category && { category: req.query.category }),
@@ -40,7 +40,7 @@ export const getposts = async (req, res, next) => {
         ],
       }),
     })
-      .sort({ updatedAt: sortDirection })
+      .sort(sortCheck(req.query.sort))
       .skip(startIndex)
       .limit(limit);
 
@@ -98,6 +98,28 @@ export const updatepost = async (req, res, next) => {
       { new: true }
     );
     res.status(200).json(updatedPost);
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+export const LikePost = async (req, res, next) => {
+  try {
+    const post = await Post.findById(req.params.postId);
+    if (!post) {
+      return next(errorHandler(404, 'Post not found'));
+    }
+    const userIndex = post.likes.indexOf(req.user.id);
+    if (userIndex === -1) {
+      post.numberOfLikes += 1;
+      post.likes.push(req.user.id);
+    } else {
+      post.numberOfLikes -= 1;
+      post.likes.splice(userIndex, 1);
+    }
+    await post.save();
+    res.status(200).json(post);
   } catch (error) {
     next(error);
   }

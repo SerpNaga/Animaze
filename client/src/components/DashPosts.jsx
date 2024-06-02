@@ -81,6 +81,7 @@ export default function DashPosts() {
               <Table.HeadCell>Фото статьи</Table.HeadCell>
               <Table.HeadCell>Название статьи</Table.HeadCell>
               <Table.HeadCell>Категория</Table.HeadCell>
+              <Table.HeadCell>Лайки</Table.HeadCell>
               <Table.HeadCell>Удалить</Table.HeadCell>
               <Table.HeadCell>
                 <span>Edit</span>
@@ -110,6 +111,7 @@ export default function DashPosts() {
                     </Link>
                   </Table.Cell>
                   <Table.Cell>{post.category}</Table.Cell>
+                  <Table.Cell>{post.numberOfLikes}</Table.Cell>
                   <Table.Cell>
                     <span
                       onClick={() => {

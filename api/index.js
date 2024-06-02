@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import userRoutes from './routes/user.route.js';
 import authRoutes from './routes/auth.route.js';
+import categoryRoutes from './routes/category.route.js';
 import postRoutes from './routes/post.route.js';
 import commentRoutes from './routes/comment.route.js';
 import cookieParser from 'cookie-parser';
@@ -35,6 +36,7 @@ app.listen(PORT, () => {
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/post', postRoutes);
+app.use('/api/category', categoryRoutes);
 app.use('/api/comment', commentRoutes);
 
 app.use(express.static(path.join(__dirname, '/client/dist')));

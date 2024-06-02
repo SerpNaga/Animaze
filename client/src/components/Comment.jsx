@@ -4,6 +4,7 @@ import { FaThumbsUp } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { Button, Textarea } from 'flowbite-react';
 import { set } from 'mongoose';
+import { ruEnds } from '../../../api/utils/text';
 
 export default function Comment({ comment, onLike, onEdit, onDelete }) {
   const [user, setUser] = useState({});
@@ -113,7 +114,7 @@ export default function Comment({ comment, onLike, onEdit, onDelete }) {
                 {comment.numberOfLikes > 0 &&
                   comment.numberOfLikes +
                     ' ' +
-                    (comment.numberOfLikes === 1 ? 'like' : 'likes')}
+                    ruEnds(comment.numberOfLikes)}
               </p>
               {currentUser &&
                 (currentUser._id === comment.userId || currentUser.isAdmin) && (

@@ -22,12 +22,28 @@ export default function UpdatePost() {
   const [formData, setFormData] = useState({});
   const [publishError, setPublishError] = useState(null);
   const { postId } = useParams();
+  const [categoryLoading, setCategoryLoading] = useState(false);
+  const [categories, setCategories] = useState([])
 
   const navigate = useNavigate();
     const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
     try {
+      const fetchCategories = async () => {
+        setCategoryLoading(true);
+        const res = await fetch("/api/category/getCategories");
+        const data = await res.json();
+        if (!res.ok) {
+          setCategoryLoading(false);
+          return;
+        }
+        if (res.ok) {
+          setCategories(data.categories);
+          setCategoryLoading(false);
+          console.log(data.categories);
+        }
+      };
       const fetchPost = async () => {
         const res = await fetch(`/api/post/getposts?postId=${postId}`);
         const data = await res.json();
@@ -43,6 +59,7 @@ export default function UpdatePost() {
       };
 
       fetchPost();
+      fetchCategories()
     } catch (error) {
       console.log(error.message);
     }
@@ -130,7 +147,14 @@ export default function UpdatePost() {
             }
             value={formData.category}
           >
-            <Options/>
+            {categoryLoading && (
+                <p className="text-xl text-gray-500">Загрузка...</p>
+              )}
+              {!categoryLoading &&
+                categories &&
+                categories.map((category) => (
+                  <option value={category.name}>{category.name}</option>
+                ))}
           </Select>
         </div>
         <div className='flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3'>

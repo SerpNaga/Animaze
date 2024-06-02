@@ -1,4 +1,6 @@
 import Comment from '../models/comment.model.js';
+import { sortCheck } from '../utils/sortCheck.js';
+import { errorHandler } from '../utils/error.js';
 
 export const createComment = async (req, res, next) => {
   try {
@@ -104,9 +106,8 @@ export const getcomments = async (req, res, next) => {
   try {
     const startIndex = parseInt(req.query.startIndex) || 0;
     const limit = parseInt(req.query.limit) || 9;
-    const sortDirection = req.query.sort === 'desc' ? -1 : 1;
     const comments = await Comment.find()
-      .sort({ createdAt: sortDirection })
+      .sort(sortCheck(req.query.sort))
       .skip(startIndex)
       .limit(limit);
     const totalComments = await Comment.countDocuments();
