@@ -5,7 +5,7 @@ import { create, create1, deleteCategory, getCategories, updateCategory } from '
 const router = express.Router();
 
 router.post('/create', verifyToken, create)
-router.get('/create/:name', create1)
+// router.get('/create/:name', create1)
 router.get('/getcategories', getCategories)
 router.delete('/deletecategory/:categoryId/:userId', verifyToken, deleteCategory)
 router.put('/updatecategory/:categoryId/:userId', verifyToken, updateCategory)
