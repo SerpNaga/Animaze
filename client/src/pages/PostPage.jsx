@@ -172,7 +172,7 @@ export default function PostPage() {
         )}
         {similarLoading || recentLoading && (
           <div className="flex justify-center items-center min-h-screen">
-            <Spinner size="xl" />
+            <Spinner size="lg" />
           </div>
         )}
         {!recentLoading && recentPosts.length > 0 && (

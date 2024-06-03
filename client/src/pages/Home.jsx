@@ -95,7 +95,7 @@ export default function Home() {
           <h2 className="text-2xl font-semibold text-center">Новые статьи</h2>
           {recentLoading && (
             <div className="flex justify-center items-center min-h-screen">
-              <Spinner size="xl" />
+              <Spinner size="lg" />
             </div>
           )}
           {!recentLoading && (
@@ -123,7 +123,7 @@ export default function Home() {
           </h2>
           {popularLoading && (
             <div className="flex justify-center items-center min-h-screen">
-              <Spinner size="xl" />
+              <Spinner size="lg" />
             </div>
           )}
           {!popularLoading && (
