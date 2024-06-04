@@ -13,7 +13,6 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Options from '../components/Options';
 
 export default function UpdatePost() {
   const [file, setFile] = useState(null);
