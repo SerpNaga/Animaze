@@ -148,7 +148,7 @@ export default function Search() {
               value={sidebarData.category}
               id="category"
             >
-              <option value="desc-likes">-Выберите Категорию-</option>
+              <option value="uncategorized">-Выберите Категорию-</option>
               {categoryLoading && (
                 <p className="text-xl text-gray-500">Загрузка...</p>
               )}
