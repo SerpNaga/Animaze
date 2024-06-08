@@ -49,7 +49,7 @@ export default function Home() {
     if (res.ok) {
       setCategories(data.categories);
       setCategoryLoading(false);
-      console.log(data.categories)
+      // console.log(data.categories)
     }
   };
   useEffect(() => {

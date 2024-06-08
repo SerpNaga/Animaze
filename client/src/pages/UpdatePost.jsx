@@ -40,7 +40,7 @@ export default function UpdatePost() {
         if (res.ok) {
           setCategories(data.categories);
           setCategoryLoading(false);
-          console.log(data.categories);
+          // console.log(data.categories);
         }
       };
       const fetchPost = async () => {

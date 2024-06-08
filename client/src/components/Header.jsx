@@ -16,13 +16,13 @@ export default function Header() {
   const { theme } = useSelector((state) => state.theme);
   const [searchTerm, setSearchTerm] = useState("");
 
-  useEffect(() => {
-    const urlParams = new URLSearchParams(location.search);
-    const searchTermFromUrl = urlParams.get("searchTerm");
-    if (searchTermFromUrl) {
-      setSearchTerm(searchTermFromUrl);
-    }
-  }, [location.search]);
+  // useEffect(() => {
+  //   const urlParams = new URLSearchParams(location.search);
+  //   const searchTermFromUrl = urlParams.get("searchTerm");
+  //   if (searchTermFromUrl) {
+  //     setSearchTerm(searchTermFromUrl);
+  //   }
+  // }, [location.search]);
 
   const handleSignout = async () => {
     try {
@@ -45,12 +45,14 @@ export default function Header() {
     const urlParams = new URLSearchParams(location.search);
     urlParams.set("searchTerm", searchTerm);
     const searchQuery = urlParams.toString();
+    setSearchTerm("");
+    // console.log(e.target)
     navigate(`/search?${searchQuery}`);
   };
 
   return (
     <>
-    <div className="h-[62px]"></div>
+      <div className="h-[62px]"></div>
       <Navbar className="border-b-2 fixed w-full z-50 top-0">
         <Link
           to="/"

@@ -10,7 +10,7 @@ export default function Search() {
     category: "uncategorized",
   });
 
-  console.log(sidebarData);
+  // console.log(sidebarData);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [categoryLoading, setCategoryLoading] = useState(false);
@@ -23,9 +23,9 @@ export default function Search() {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
-    const searchTermFromUrl = urlParams.get("searchTerm");
-    const sortFromUrl = urlParams.get("sort");
-    const categoryFromUrl = urlParams.get("category");
+    const searchTermFromUrl = urlParams.get("searchTerm") || "";
+    const sortFromUrl = urlParams.get("sort") || "desc-date";
+    const categoryFromUrl = urlParams.get("category") || "uncategorized";
     if (searchTermFromUrl || sortFromUrl || categoryFromUrl) {
       setSidebarData({
         ...sidebarData,
@@ -65,7 +65,7 @@ export default function Search() {
       if (res.ok) {
         setCategories(data.categories);
         setCategoryLoading(false);
-        console.log(data.categories);
+        // console.log(data.categories);
       }
     };
     fetchPosts();
@@ -89,7 +89,7 @@ export default function Search() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const urlParams = new URLSearchParams(location.search);
-    urlParams.set("searchTerm", sidebarData.searchTerm);
+    searchTerm&&urlParams.set("searchTerm", sidebarData.searchTerm);
     urlParams.set("sort", sidebarData.sort);
     sidebarData.category && sidebarData.category != "uncategorized"
       ? urlParams.set("category", sidebarData.category)
@@ -129,7 +129,7 @@ export default function Search() {
               placeholder="Поиск..."
               id="searchTerm"
               type="text"
-              value={sidebarData.searchTerm}
+              value={sidebarData.searchTerm || ""}
               onChange={handleChange}
             />
           </div>
