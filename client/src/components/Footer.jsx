@@ -18,7 +18,7 @@ export default function FooterCom() {
           </div>
           <div className='grid grid-cols-2 gap-8 mt-4 sm:grid-cols-3 sm:gap-6'>
             <div>
-              <Footer.Title title='О нас' />
+              <Footer.Title title='Информация' />
               <Footer.LinkGroup col>
                 {/* <Footer.Link
                   href='https://www.100jsprojects.com'
@@ -29,10 +29,10 @@ export default function FooterCom() {
                 </Footer.Link> */}
                 <Footer.Link
                   href='/about'
-                  target='_blank'
+                  // target='_blank'
                   rel='noopener noreferrer'
                 >
-                  Animaze
+                  О нас
                 </Footer.Link>
               {/* </Footer.LinkGroup>
             </div> */}
