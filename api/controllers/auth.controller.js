@@ -21,6 +21,7 @@ export const signup = async (req, res, next) => {
     username < 4 ||
     username > 20
   ) {
+    username='';
     next(errorHandler(400, 'Username must be between 4 and 20 characters'));
   }
 
