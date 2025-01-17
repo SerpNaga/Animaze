@@ -17,6 +17,12 @@ export const signup = async (req, res, next) => {
   ) {
     next(errorHandler(400, 'All fields are required'));
   }
+  if (
+    username < 4 ||
+    username > 20
+  ) {
+    next(errorHandler(400, 'Username must be between 4 and 20 characters'));
+  }
 
   const hashedPassword = bcryptjs.hashSync(password, 10);
 
